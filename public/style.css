@@ -1,0 +1,927 @@
+/* General styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align at top, not center */
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px; /* Default for admin/player */
+    box-sizing: border-box;
+    position: relative; /* Для позиционирования анимируемых секций */
+    min-height: 500px; /* Минимальная высота для container, чтобы секции не "прыгали" */
+    overflow: hidden; /* Скрываем выходящие за границы секции */
+}
+
+/* Specific override for host container */
+.host-container {
+    max-width: 1200px; /* Wider for host screen to fit 16:9, more space */
+    min-height: 100vh; /* Ensure container takes full viewport height */
+    height: 100%; /* For relative positioning and sizing of child elements */
+}
+
+h1, h2, h3, h4 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="file"],
+select {
+    width: calc(100% - 20px);
+    padding: 12px 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 1em;
+}
+
+/* Centering and constraining width for inputs/selects in host */
+.host-container input[type="text"],
+.host-container input[type="number"],
+.host-container select {
+    max-width: 400px; /* Constrain width of input/select fields */
+    margin-left: auto; /* Center them */
+    margin-right: auto;
+    display: block; /* Ensure it's a block element to apply margin auto */
+}
+
+.host-container label {
+    text-align: center; /* Center labels for better aesthetic with centered inputs */
+    width: 100%; /* Take full width of parent to center text */
+}
+
+button {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 100%; /* Default, will be overridden for host actions */
+    margin-top: 10px;
+}
+
+button:hover:not(:disabled) {
+    background-color: #45a049;
+    transform: translateY(-2px);
+}
+
+button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.reset-button {
+    background-color: #f44336; /* Red */
+    margin-left: 10px; /* Keep for admin panel, will be overridden for host */
+}
+
+.reset-button:hover:not(:disabled) {
+    background-color: #d32f2f;
+}
+
+.highlight {
+    color: #2196F3; /* Blue */
+    font-weight: bold;
+    font-size: large;
+}
+
+.status-message {
+    margin-top: 15px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+    opacity: 0; /* Изначально скрыто для анимации */
+    transform: translateY(-10px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+.status-message:not(.hidden) {
+    opacity: 1;
+    transform: translateY(0);
+}
+.status-message.error-message {
+    background-color: #ffebee; /* Light red */
+    color: #d32f2f; /* Dark red */
+}
+.status-message.success-message {
+    background-color: #e8f5e9; /* Light green */
+    color: #2e7d32; /* Dark green */
+}
+
+.hidden {
+    display: none !important;
+}
+
+ul, ol {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+}
+
+ul li, ol li {
+    background-color: #f5f5f5;
+    padding: 12px 15px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.05em;
+    color: #444;
+}
+
+/* Specific styles for Admin Panel */
+.admin-container .section div button {
+    width: auto;
+    margin-left: 10px;
+    padding: 8px 15px;
+    font-size: 0.9em;
+}
+
+.admin-container #quizzesList li,
+.admin-container #questionsList li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.admin-container #quizzesList li span,
+.admin-container #questionsList li span {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+/* Choices styling in admin panel */
+.choices-container {
+    margin-bottom: 20px;
+}
+
+.choice-input-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.choice-input-item input[type="text"] {
+    flex-grow: 1;
+    margin-bottom: 0;
+    margin-right: 10px;
+}
+
+.choice-input-item .remove-choice-btn {
+    width: auto;
+    padding: 8px 12px;
+    margin: 0;
+    font-size: 0.9em;
+    background-color: #ccc;
+    color: #333;
+}
+
+.choice-input-item .remove-choice-btn:hover {
+    background-color: #bbb;
+}
+
+/* Image preview in admin panel */
+.image-preview {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    border: 1px dashed #ccc;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.image-preview img {
+    max-width: 100%;
+    height: auto;
+    max-height: 200px;
+    display: block;
+    margin: 0 auto 10px auto;
+    border-radius: 4px;
+}
+
+.image-preview button {
+    width: auto;
+    padding: 8px 15px;
+    font-size: 0.9em;
+    background-color: #f44336;
+}
+
+.question-image-container, .host-question-image-container {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.question-image-container img, .host-question-image-container img {
+    max-width: 100%;
+    height: auto;
+    max-height: 300px; /* Увеличил максимальную высоту */
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    display: block; 
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+
+/* Answer options (Player) */
+#playerAnswerOptions {
+    margin-top: 20px;
+    display: grid;
+    gap: 10px;
+    /* Можно использовать flex или grid для расположения вариантов */
+    /* grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */
+}
+
+.option-block {
+    background-color: #f0f0f0;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.option-block:hover:not(.answer-submitted-disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-color: #2196F3;
+}
+
+.answer-option-label {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Центрирование текста */
+    user-select: none;
+    position: relative;
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+    text-align: center;
+    font-size: 1.1em;
+    background-color: #f9f9f9;
+}
+
+.answer-option-label:hover {
+    background-color: #e0e0e0;
+    transform: translateY(-2px);
+}
+
+.answer-option-label input[type="radio"],
+.answer-option-label input[type="checkbox"] {
+    display: none; /* Скрываем стандартные радио/чекбоксы */
+}
+
+.answer-option-label span {
+    flex-grow: 1; /* Чтобы текст занимал доступное пространство */
+    padding: 0 10px; /* Отступы для текста, если вдруг инпут будет виден */
+}
+
+.answer-option-label.player-selected-choice {
+    background-color: #bbdefb; /* Светло-синий для выбранного */
+    border-color: #2196F3; /* Синий */
+    transform: translateY(0);
+}
+
+/* Динамическая обратная связь: Правильный ответ */
+.answer-option-label.correct-choice,
+.host-answer-option.correct-choice {
+    background-color: #c8e6c9; /* Светло-зеленый */
+    border-color: #4CAF50; /* Зеленый */
+    font-weight: bold;
+    animation: correct-answer-pulse 0.8s ease-out; /* Анимация для правильного */
+}
+
+/* Динамическая обратная связь: Неправильный ответ игрока */
+.answer-option-label.incorrect-choice {
+    background-color: #ffcdd2; /* Светло-красный */
+    border-color: #F44336; /* Красный */
+}
+
+/* Делаем варианты неактивными после ответа */
+.answer-option-label.answer-submitted-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none; /* Делает элемент некликабельным */
+}
+
+/* Анимация пульсации для правильного ответа */
+@keyframes correct-answer-pulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 rgba(76, 175, 80, 0.7); }
+    50% { transform: scale(1.03); box-shadow: 0 0 10px rgba(76, 175, 80, 0.9); }
+    100% { transform: scale(1); box-shadow: 0 0 0 rgba(76, 175, 80, 0.7); }
+}
+
+/* Text answer input for player */
+.text-input {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1.1em;
+    box-sizing: border-box;
+    margin-top: 20px;
+}
+
+/* Timer Bar */
+.timer-bar-container {
+    width: 100%;
+    height: 30px;
+    background-color: #e0e0e0;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-top: 20px;
+    position: relative;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.timer-bar {
+    height: 100%;
+    width: 100%;
+    background-color: #4CAF50; /* Green */
+    border-radius: 15px;
+    transition: width linear, background-color 0.5s ease-in-out;
+    transform-origin: right; /* Бар уменьшается влево */
+}
+
+.timer-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.1em;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+/* Timer color changes */
+.timer-bar-container.warning .timer-bar {
+    background-color: #FFC107; /* Amber */
+}
+.timer-bar-container.critical .timer-bar {
+    background-color: #F44336; /* Red */
+}
+.timer-bar-container.expired .timer-bar {
+    background-color: #9E9E9E; /* Grey */
+    width: 0% !important; /* Гарантируем, что бар исчезает */
+}
+
+/* Анимация пульсации для текста таймера в критическом состоянии */
+@keyframes pulse-timer-text {
+    0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; color: #FFF; } /* Белый */
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+.timer-bar-container.critical .timer-text {
+    animation: pulse-timer-text 1s infinite alternate;
+}
+
+/* Host-specific answer options */
+.host-answer-options-container {
+    margin-top: 20px;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(2, 1fr); /* Всегда 2 колонки, равномерно распределенные */
+    width: 100%;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.host-answer-option {
+    background-color: #e0f2f7; /* Light blue */
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: 500;
+    border: 2px solid #a7d9ed;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    display: flex; /* NEW: Use flexbox for inner content */
+    flex-direction: column; /* NEW: Stack text and stats */
+    justify-content: center; /* NEW: Center vertically */
+    align-items: center; /* NEW: Center horizontally */
+    min-height: 80px; /* NEW: Ensure a minimum height for visual consistency */
+}
+
+/* NEW: Styles for text and stats within host options */
+.host-choice-text {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #2c3e50;
+    margin-bottom: 5px;
+    white-space: normal; /* Allow text to wrap */
+    word-break: break-word;
+}
+
+.answer-stats {
+    font-size: 0.9em;
+    color: #607d8b; /* Greyish blue */
+    font-weight: normal;
+}
+
+.host-text-question-info {
+    font-style: italic;
+    color: #666;
+    text-align: center;
+    margin-top: 15px;
+    font-size: 1.1em;
+}
+
+/* NEW: Styles for host text answers list */
+.host-text-answers-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+    width: 100%;
+    max-height: 300px; /* Limit height for scrolling */
+    overflow-y: auto;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    background-color: #fcfcfc;
+}
+
+.host-text-answers-list li {
+    background-color: #f5f5f5;
+    padding: 10px 15px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    text-align: left; /* Align text answers to the left */
+    font-size: 1em;
+    color: #444;
+    display: block; /* Ensure it's a block for margin-bottom to work */
+}
+
+
+/* Host question details */
+#hostQuestionDetails {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    text-align: center;
+}
+
+#hostCorrectAnswerFeedback {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #4CAF50; /* Green */
+    font-size: 1.1em;
+}
+
+#answeredPlayersCount, #totalPlayersCount {
+    font-weight: bold;
+    color: #2196F3;
+}
+
+/* Player List animation on Host */
+@keyframes player-answered-pulse {
+    0% { background-color: transparent; }
+    50% { background-color: rgba(255, 255, 0, 0.3); } /* Желтый */
+    100% { background-color: transparent; }
+}
+.player-list-item.player-answered {
+    animation: player-answered-pulse 1s forwards;
+}
+
+/* Leaderboard List animation */
+.leaderboard-list li {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+    margin-bottom: 8px;
+    background-color: #e3f2fd; /* Light blue for leaderboard items */
+    border: 1px solid #bbdefb;
+    color: #3f51b5;
+}
+.leaderboard-list li.animated {
+    opacity: 1;
+    transform: translateY(0);
+}
+.leaderboard-list li span:first-child {
+    font-weight: bold;
+}
+.leaderboard-list li span:last-child {
+    color: #0d47a1;
+}
+
+/* Section Transitions (Player and Host) */
+.section {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    position: absolute; /* Чтобы секции не занимали место, когда скрыты */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; /* Sections now take full height */
+    min-height: 100%; /* Added: minimum height to ensure full coverage */
+    /* Если нужно центрировать контент в секции, используйте flexbox */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px; /* Отступы для контента секции */
+    box-sizing: border-box;
+}
+
+.section.active {
+    opacity: 1;
+    transform: translateY(0);
+    position: relative; /* Активная секция занимает свое место */
+    height: auto; /* Allow height to fit content by default */
+    display: flex; /* Show flex content */
+    flex-direction: column; /* NEW: Ensure column direction for content flow */
+    justify-content: flex-start; /* Align items to the top */
+    align-items: stretch; /* Stretch items to fill width */
+    padding-top: 20px;
+    padding-bottom: 20px;
+    overflow-y: auto; /* Enable scrolling if content exceeds height */
+}
+
+/* Временный стиль для секций, которые нужно отображать, но не анимировать */
+.section-visible-no-animation {
+    opacity: 1;
+    transform: translateY(0);
+    position: relative;
+    height: auto;
+    display: flex; /* Для корректного отображения */
+    flex-direction: column; /* или block, в зависимости от контекста */
+    justify-content: flex-start; /* Выравнивание по верху */
+    align-items: stretch; /* Растягивание элементов */
+}
+
+
+/* Specific adjustments for existing layouts */
+.host-container, .player-container {
+    display: flex; /* Используем flex для расположения контента */
+    flex-direction: column;
+    align-items: center;
+}
+
+.host-container .section, .player-container .section {
+    /* Отключаем center-justify для .section внутри container, если нужно выравнивание по верху */
+    justify-content: flex-start; /* Выравнивание по верху */
+    align-items: stretch; /* Растягивание элементов по ширине */
+    padding-top: 20px; /* Дополнительный отступ сверху */
+}
+
+
+/* Ensure host-timer-container is styled correctly */
+.host-timer-container {
+    width: 80%; /* Чуть уже для хоста */
+    margin: 20px auto;
+}
+
+/* Quiz End / Podium Styles */
+#quizEnd.section.active {
+    height: 100%; /* Ensure it takes full height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribute items vertically */
+    align-items: center; /* Center items horizontally (for elements that don't stretch) */
+    padding: 20px; /* Keep consistent padding */
+    overflow-y: hidden; /* Main section does not scroll, inner components do */
+}
+
+#quizEnd h3 { /* "Викторина Завершена!" */
+    margin-top: 0; /* Remove default h3 top margin */
+    margin-bottom: 10px; /* Keep some space below */
+    flex-shrink: 0;
+    font-size: 2em; /* Ensure it's prominent */
+}
+
+#quizEnd p { /* "Поздравляем победителей!" */
+    margin-top: 0; /* Remove default p top margin */
+    margin-bottom: 20px; /* Space below this message before the podium */
+    flex-shrink: 0;
+    font-size: 1.2em; /* Make it clearly visible */
+}
+
+.podium-container {
+    flex-shrink: 0; /* Prevent podium from shrinking */
+    width: 100%; /* Changed to fill available space */
+    /* max-width: 900px; */ /* Removed to allow stretching */
+    height: 300px; /* Give it a fixed height for consistent look */
+    margin-top: 10px;
+    margin-bottom: 10px;
+    position: relative;
+    background: linear-gradient(to bottom, #eceff1, #cfd8dc);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.podium-place {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-weight: bold;
+    color: #333;
+    background-color: #ffffff;
+    border-radius: 10px 10px 0 0;
+    padding: 8px 5px 5px 5px; /* Changed: Adjusted vertical padding for better fit */
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.15);
+    transition: all 0.8s ease-out;
+    opacity: 0;
+    transform: translateY(100%);
+    box-sizing: border-box;
+    bottom: 0; /* Position at the bottom of the podium container */
+}
+
+.podium-place.animated {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.podium-place .player-name {
+    font-size: 1em; /* Changed: Slightly reduced font size for longer names */
+    margin-bottom: 3px; /* Changed: Reduced margin */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%; /* Take full available width */
+    text-align: center;
+    padding: 0 3px; /* Minimal horizontal padding */
+}
+
+.podium-place .player-score {
+    font-size: 0.8em; /* Changed: Reduced score font size */
+    color: #666;
+    margin-bottom: 8px; /* Changed: Reduced margin */
+    flex-shrink: 0;
+}
+
+.podium-step {
+    font-size: 1.8em; /* Slightly reduced size for the number */
+    font-weight: bold;
+    color: white;
+    background-color: #4CAF50;
+    border-radius: 50%;
+    width: 45px; /* Slightly smaller circle */
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3px; /* Changed: Reduced margin-top */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    flex-shrink: 0; /* Added: Prevent podium step from being squashed */
+}
+
+/* Specific styles for 1st, 2nd, 3rd place */
+.place-1 {
+    height: 180px;
+    width: 180px; /* Reduced to provide more overall space for 3 podiums */
+    background-color: #FFD700; /* Gold */
+    border: 2px solid #DAA520;
+    z-index: 3;
+    left: 50%;
+    transform: translateX(-50%) translateY(100%); /* Start below */
+    padding-top: 0; /* Removed conflicting padding */
+}
+.place-1.animated {
+    transform: translateX(-50%) translateY(0);
+}
+
+
+.place-2 {
+    height: 140px;
+    width: 160px; /* Reduced slightly */
+    background-color: #C0C0C0; /* Silver */
+    border: 2px solid #A9A9A9;
+    z-index: 2;
+    left: calc(50% - 190px); /* Adjusted positioning (180/2 + 20px gap + 160/2 = 90 + 20 + 80 = 190) */
+    transform: translateX(-50%) translateY(100%);
+    padding-top: 0; /* Removed conflicting padding */
+}
+.place-2.animated {
+    transform: translateX(-50%) translateY(0);
+}
+
+
+.place-3 {
+    height: 120px; /* Changed: Increased height for 3rd place to accommodate content better */
+    width: 160px; /* Reduced slightly */
+    background-color: #CD7F32; /* Bronze */
+    border: 2px solid #8B4513;
+    z-index: 2;
+    left: calc(50% + 190px); /* Adjusted positioning */
+    transform: translateX(-50%) translateY(100%);
+    padding-top: 0; /* Removed conflicting padding */
+}
+.place-3.animated {
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Animation delays for podium places */
+.place-1.animated { transition-delay: 0.5s; }
+.place-2.animated { transition-delay: 0s; } /* Second place first for dramatic effect */
+.place-3.animated { transition-delay: 1s; } /* Third place last */
+
+
+/* Other Quiz End adjustments */
+#quizEnd h4 { /* "Итоговая таблица лидеров" */
+    margin-top: 30px; /* More space above leaderboard title */
+    margin-bottom: 10px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+#finalLeaderboardList {
+    flex-grow: 1; /* Allow the list to take remaining vertical space */
+    overflow-y: auto; /* Add scrollbar if list is too long */
+    width: 100%; /* Changed to fill available space */
+    /* max-width: 800px; */ /* Removed to allow stretching */
+    margin-top: 0; /* Remove top margin, let h4 handle spacing */
+    margin-bottom: 10px;
+    padding-right: 5px;
+    box-sizing: border-box;
+}
+
+#quizEnd #startNewGameBtn {
+    flex-shrink: 0;
+    margin-top: 10px;
+    width: 100%; /* Changed to fill available space */
+    /* max-width: 400px; */ /* Removed to allow stretching */
+    align-self: center; /* Center the button */
+}
+
+/* Host specific action buttons layout */
+.host-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.host-actions button {
+    max-width: 300px;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 10px;
+}
+
+.host-actions button:last-child {
+    margin-bottom: 0;
+}
+
+/* Ensure central alignment for quiz code and link */
+#quizSetup p {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#quizSelector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+#quizSelector select {
+    margin-bottom: 0;
+}
+
+/* Player list styling for host lobby */
+#playerListContainer {
+    width: 100%;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+#playerListContainer h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+#playerList {
+    width: 100%;
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    padding-right: 5px;
+    box-sizing: border-box;
+}
+
+#playerList li {
+    justify-content: center;
+    font-size: 1.2em;
+    padding: 10px 15px;
+}
+
+/* Host Lobby Grid Layout for 16:9 screens */
+.host-lobby-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+    width: 100%;
+    height: 100%;
+}
+
+@media (min-width: 900px) {
+    .host-lobby-grid {
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
+    }
+
+    .host-info-panel, .host-player-panel {
+        padding: 10px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .host-info-panel p, .host-info-panel label, .host-info-panel select {
+        width: auto;
+        max-width: 400px;
+    }
+
+    .host-info-panel .host-actions {
+        margin-top: auto;
+        width: 100%;
+        max-width: 400px;
+    }
+
+    #playerListContainer {
+        height: 100%;
+        margin: 0;
+    }
+
+    #playerList {
+        flex-grow: 1;
+        max-height: none;
+    }
+}
+/* Language Switcher */
+.lang-switcher-wrapper {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+.lang-switcher-wrapper select {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color var(--transition-speed);
+}
+.lang-switcher-wrapper select:hover {
+    background-color: var(--hover-color);
+}

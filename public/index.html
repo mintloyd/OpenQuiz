@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Host</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container host-container">
+       <!-- <div id="connectionStatus" class="status-message">Ожидание подключения к серверу...</div>-->
+        <div id="quizSetup" class="section">
+            <div class="host-lobby-grid">
+                <div class="host-info-panel">
+                    <h3 data-i18n="host.quizSetup">Настройка викторины</h3>
+                    <p><span data-i18n="host.quizCode">Код викторины для игроков:</span> <span id="quizCode" class="highlight">---</span></p>
+                    <p><span data-i18n="host.playerLink">Игроки могут подключиться по адресу:</span> <span id="playerLink" class="highlight">---</span></p>
+                    <div id="quizSelector">
+                        <label for="availableQuizzes" data-i18n="host.selectQuizLabel">Выберите викторину:</label>
+                        <select id="availableQuizzes" data-i18n-select="true">
+                            <option value="" data-i18n="host.selectDefault">-- Выберите --</option>
+                        </select>
+                        <p><span data-i18n="host.selectedQuiz">Выбрана викторина:</span> <span id="selectedQuizTitle" class="highlight" data-i18n="host.none">Нет</span></p>
+                    </div>
+                    <div class="host-actions">
+                        <button id="startGameBtn" disabled data-i18n="host.startBtn">Начать игру</button>
+                        <button id="resetGameBtn" class="reset-button" data-i18n="host.resetBtn">Сбросить игру</button>
+                    </div>
+                </div>
+                <div class="host-player-panel">
+                    <div id="playerListContainer">
+                        <h3 data-i18n="host.playersInLobby">Игроки в лобби (<span id="playerCount" data-i18n-html="true">0</span>):</h3>
+                        <ul id="playerList">
+                            <!-- Player names will appear here -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ИСПРАВЛЕНИЕ: ДОБАВЛЕНА ОБЕРТКА ДЛЯ СЕКЦИИ gamePlay -->
+        <div id="gamePlay" class="section hidden"> 
+            <h3 id="questionTitle"></h3>
+            <p id="questionInfo"></p>
+            <!-- Контейнер для изображения вопроса на экране ведущего -->
+            <div class="host-question-image-container">
+                <img id="hostQuestionImage" src="" alt="Question Image" class="hidden">
+            </div>
+            <!-- НОВОЕ: Контейнер для вариантов ответа на экране ведущего -->
+            <div id="hostAnswerOptionsContainer" class="host-answer-options-container hidden">
+                <!-- Options will be dynamically loaded here -->
+            </div>
+            <!-- НОВОЕ: Таймер для ведущего -->
+            <div id="hostTimerContainer" class="timer-bar-container host-timer-container hidden">
+                <div id="hostTimerBar" class="timer-bar"></div>
+                <div id="hostTimerText" class="timer-text"></div>
+            </div>
+            <div id="hostQuestionDetails" class="hidden">
+                <div id="hostCorrectAnswerFeedback" class="status-message hidden success-message"></div>
+                <p><span data-i18n="host.answeredLabel">Ответили:</span> <span id="answeredPlayersCount">0</span>/<span id="totalPlayersCount">0</span></p>
+            </div>
+            <button id="nextQuestionBtn" disabled class="hidden" data-i18n="host.nextQuestion">Следующий вопрос</button>
+            <button id="showLeaderboardBtn" class="hidden" data-i18n="host.showLeaderboard">Таблица лидеров</button>
+        </div>
+        <!-- КОНЕЦ ИСПРАВЛЕНИЯ gamePlay section -->
+        
+        
+        <div id="leaderboard" class="section hidden">
+            <h2 data-i18n="host.leaderboardTitle">Таблица лидеров:</h2>
+            <ol id="leaderboardList">
+                <!-- Leaderboard will appear here -->
+            </ol>
+        </div>
+        
+        <!-- МОДИФИЦИРОВАННАЯ СЕКЦИЯ QUIZ END ДЛЯ ПОДИУМА -->
+        <div id="quizEnd" class="section hidden">
+            <h3 data-i18n="host.quizFinished">Викторина Завершена!</h3>
+            <p data-i18n="host.congratulations">Поздравляем победителей!</p>
+            <div class="podium-container">
+                <div id="place2" class="podium-place place-2 hidden">
+                    <span class="player-name"></span>
+                    <span class="player-score"></span>
+                    <div class="podium-step">2</div>
+                </div>
+                <div id="place1" class="podium-place place-1 hidden">
+                    <span class="player-name"></span>
+                    <span class="player-score"></span>
+                    <div class="podium-step">1</div>
+                </div>
+                <div id="place3" class="podium-place place-3 hidden">
+                    <span class="player-name"></span>
+                    <span class="player-score"></span>
+                    <div class="podium-step">3</div>
+                </div>
+            </div>
+            <h4 data-i18n="host.finalLeaderboard">Итоговая таблица лидеров</h4>
+            <ol id="finalLeaderboardList">
+                <!-- Final leaderboard will appear here -->
+            </ol>
+            <button id="startNewGameBtn" class="reset-button" data-i18n="host.startNewGame">Начать новую игру</button>
+        </div>
+    </div>
+    <script src="i18n.js"></script>
+    <script src="host.js"></script>
+</body>
+</html>

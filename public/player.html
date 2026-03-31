@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Player</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container player-container">
+       <!-- <div id="connectionStatus" class="status-message">Ожидание подключения к серверу...</div> -->
+       <!-- Оставляем connectionStatus закомментированным, как вы и хотели -->
+
+        <div id="joinScreen" class="section hidden"> <!-- УБЕДИТЕСЬ, ЧТО КЛАСС "hidden" ЗДЕСЬ -->
+            <label for="playerName" data-i18n="player.joinSection.nameLabel">Ваше имя:</label>
+            <input type="text" id="playerName" data-i18n="player.joinSection.namePlaceholder" placeholder="Введите ваше имя" required>
+            <label for="quizCodeInput" data-i18n="player.joinSection.codeLabel">Код викторины:</label>
+            <input type="text" id="quizCodeInput" data-i18n="player.joinSection.codePlaceholder" placeholder="Введите код викторины" maxlength="6" required>
+            <button id="joinQuizBtn" disabled data-i18n="player.joinSection.joinBtn">Присоединиться</button>
+            <p id="joinError" class="error-message hidden"></p>
+        </div>
+
+        <div id="lobbyScreen" class="section hidden">
+            <h3 data-i18n="player.lobbySection.title">Лобби викторины: <span id="lobbyQuizTitle" data-i18n-html="true"></span></h3>
+            <p><span data-i18n="player.lobbySection.yourName">Ваше имя:</span> <span id="lobbyPlayerName" class="highlight"></span></p>
+            <p><span data-i18n="player.lobbySection.playerCount">Игроков в лобби:</span> <span id="lobbyPlayerCount">0</span></p>
+            <ul id="lobbyPlayerList">
+                <!-- Player names will appear here -->
+            </ul>
+            <p data-i18n="player.lobbySection.waitStart">Ожидайте, пока ведущий начнет игру.</p>
+        </div>
+
+        <div id="gameScreen" class="section hidden">
+            <h3 id="playerQuestionTitle"></h3>
+            <div class="question-image-container">
+                <img id="playerQuestionImage" src="" alt="Question Image" class="hidden">
+            </div>
+            <div id="playerAnswerOptions">
+                <!-- Player answer options (radio/checkbox) will be loaded here -->
+            </div>
+            <div id="playerAnswerInput" class="hidden">
+                <input type="text" id="playerTextAnswer" class="text-input" data-i18n="player.gameScreen.textPlaceholder" placeholder="Введите ваш ответ">
+            </div>
+            <button id="submitAnswerBtn" data-i18n="player.gameScreen.submitBtn">Ответить</button>
+            <p id="feedbackMessage" class="hidden status-message"></p>
+
+            <!-- НОВОЕ: Player-side Correct Answer Feedback -->
+            <div id="playerCorrectAnswerFeedback" class="hidden status-message"></div>
+
+            <div id="playerTimerContainer" class="timer-bar-container hidden">
+                <div id="playerTimerBar" class="timer-bar"></div>
+                <div id="playerTimerText" class="timer-text"></div>
+            </div>
+        </div>
+
+        </div>
+
+        <div id="playerLeaderboard" class="section hidden">
+            <h3 data-i18n="player.leaderboard.yourResult">Ваш результат</h3>
+            <ol id="playerLeaderboardList">
+                <!-- Leaderboard will appear here -->
+            </ol>
+        </div>
+
+        <div id="quizFinishedScreen" class="section hidden">
+            <h3 data-i18n="player.finishedScreen.title">Викторина Завершена!</h3>
+            <p><span data-i18n="player.finishedScreen.finalScore">Ваш финальный счет: {score} очков</span></p>
+            <h3 data-i18n="player.finishedScreen.finalLeaderboard">Итоговая таблица лидеров</h3>
+            <ol id="finalLeaderboardListPlayer">
+               <!--  Final leaderboard will appear here -->
+            </ol>
+            <button id="playAgainBtn" class="reset-button" data-i18n="player.finishedScreen.playAgain">Начать новую игру</button>
+        </div>
+    </div>
+    <script src="i18n.js"></script>
+    <script src="player.js"></script>
+</body>
+</html>

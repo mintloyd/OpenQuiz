@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Admin</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- SurveyJS CSS for preview, though we customize rendering -->
+    <link href="https://unpkg.com/survey-knockout/survey.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container admin-container">
+        <h1 data-i18n="admin.adminPanelTitle">Админ-панель Викторин</h1>
+        <div id="adminStatus" class="status-message"></div>
+
+        <div id="quizListSection" class="section">
+            <h3 data-i18n="admin.quizList.title">Доступные викторины</h3>
+            <ul id="quizzesList">
+                <!-- Quizzes will be loaded here -->
+            </ul>
+            <button id="addNewQuizBtn" class="action-btn" data-i18n="admin.quizList.createNewBtn">Создать новую викторину</button>
+        </div>
+
+        <div id="quizEditorSection" class="section hidden">
+            <h3 id="editorTitle" data-i18n="admin.quizEditor.createNewTitle">Создать новую викторину</h3>
+            <input type="hidden" id="currentQuizId">
+            <div class="form-group">
+                <label for="quizTitle" data-i18n="admin.quizEditor.titleLabel">Название викторины:</label>
+                <input type="text" id="quizTitle" data-i18n="admin.quizEditor.titlePlaceholder" placeholder="Введите название викторины">
+            </div>
+            <div class="form-actions">
+                <button id="saveQuizBtn" class="action-btn" data-i18n="admin.quizEditor.saveBtn">Сохранить викторину</button>
+                <button id="cancelEditQuizBtn" class="reset-button" data-i18n="admin.quizEditor.cancelBtn">Отмена</button>
+            </div>
+
+            <div id="questionsListContainer" class="hidden">
+                <h4><span data-i18n="admin.quizEditor.questionsLabel">Вопросы викторины</span> (<span id="questionsCount">0</span>)</h4>
+                <ul id="questionsList">
+                    <!-- Questions will be loaded here -->
+                </ul>
+                <button id="addNewQuestionBtn" class="action-btn" data-i18n="admin.quizEditor.addNewQuestionBtn">Добавить новый вопрос</button>
+            </div>
+        </div>
+
+        <div id="questionEditorSection" class="section hidden">
+            <h4 id="questionEditorTitle" data-i18n="admin.questionEditor.createNewTitle">Создать новый вопрос</h4>
+            <input type="hidden" id="currentQuestionId">
+
+            <div class="form-group">
+                <label for="questionText" data-i18n="admin.questionEditor.textLabel">Текст вопроса:</label>
+                <input type="text" id="questionText" data-i18n="admin.questionEditor.textPlaceholder" placeholder="Введите текст вопроса">
+            </div>
+
+            <div class="form-group">
+                <label data-i18n="admin.questionEditor.typeLabel">Тип вопроса:</label>
+                <select id="questionType">
+                    <option value="radiogroup" data-i18n="admin.questionEditor.typeRadio">Один вариант (Радиокнопки)</option>
+                    <option value="checkbox" data-i18n="admin.questionEditor.typeCheckbox">Несколько вариантов (Чекбоксы)</option>
+                    <option value="text" data-i18n="admin.questionEditor.typeText">Текстовый ответ</option>
+                </select>
+            </div>
+
+            <div id="choicesContainer" class="choices-container hidden">
+                <label data-i18n="admin.questionEditor.choicesLabel">Варианты ответов:</label>
+                <div id="choicesInputList">
+                    <!-- Dynamic choice inputs go here -->
+                </div>
+                <button id="addChoiceBtn" data-i18n="admin.questionEditor.addChoiceBtn">Добавить вариант</button>
+            </div>
+
+            <div class="form-group">
+                <label for="correctAnswerText" data-i18n="admin.questionEditor.correctAnswerLabel">Правильный ответ (или ответы, через запятую для нескольких):</label>
+                <input type="text" id="correctAnswerText" data-i18n="admin.questionEditor.correctAnswerPlaceholder" placeholder="Введите правильный ответ(ы)">
+            </div>
+
+            <div class="form-group">
+                <label for="questionTimer" data-i18n="admin.questionEditor.timerLabel">Время на ответ (секунды):</label>
+                <input type="number" id="questionTimer" value="20" min="5">
+            </div>
+
+            <label for="questionImage" data-i18n="admin.questionEditor.imageLabel">Изображение к вопросу:</label>
+            <input type="file" id="questionImage" accept="image/*">
+            <div id="currentImagePreview" class="image-preview hidden">
+                <img src="" alt="Image preview">
+                <button id="clearImageBtn" class="reset-button" data-i18n="admin.questionEditor.clearImageBtn">Удалить изображение</button>
+            </div>
+
+            <button id="saveQuestionBtn" class="action-btn" data-i18n="admin.questionEditor.saveBtn">Сохранить вопрос</button>
+            <button id="cancelEditQuestionBtn" class="reset-button" data-i18n="admin.questionEditor.cancelBtn">Отмена</button>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/knockout/build/output/knockout-latest.js"></script>
+    <script src="https://unpkg.com/survey-knockout/survey.min.js"></script>
+    <script src="i18n.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

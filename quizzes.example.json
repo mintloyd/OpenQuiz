@@ -1,0 +1,39 @@
+[
+  {
+    "id": "example-quiz-1",
+    "title": "Example Science Quiz",
+    "questions": [
+      {
+        "id": "q1",
+        "name": "q_water",
+        "title": "What is the chemical formula for water?",
+        "type": "radiogroup",
+        "choices": [
+          "H2O",
+          "CO2",
+          "O2",
+          "NaCl"
+        ],
+        "correctAnswer": "H2O",
+        "timer": 15
+      },
+      {
+        "id": "q2",
+        "name": "q_planets",
+        "title": "Which of these are planets in our solar system? (Select 2)",
+        "type": "checkbox",
+        "choices": [
+          "Mars",
+          "Sirius",
+          "Jupiter",
+          "Alpha Centauri"
+        ],
+        "correctAnswer": [
+          "Mars",
+          "Jupiter"
+        ],
+        "timer": 20
+      }
+    ]
+  }
+]
