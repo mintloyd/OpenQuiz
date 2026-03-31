@@ -2,7 +2,7 @@
 
 A Kahoot-style, real-time multiplayer quiz game built with Node.js, Express, and WebSockets.
 
-![Quiz Host Placeholder](https://via.placeholder.com/800x400.png?text=Quiz+Host+Dashboard)
+![Interface](interface.png)
 
 ## Features
 - **Real-time Gameplay:** Instant synchronization between Host and Players via WebSockets.
