@@ -18,8 +18,8 @@ A Kahoot-style, real-time multiplayer quiz game built with Node.js, Express, and
 ### 1. Installation
 Clone the repository and install dependencies:
 ```bash
-git clone <your-repo-url>
-cd quiz
+git clone https://github.com/mintloyd/OpenQuiz.git
+cd OpenQuiz
 npm install
 ```
 
